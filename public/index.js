@@ -63,6 +63,16 @@ function insertNewTwit(twitText, twitAuthor) {
  */
 var allTwits = [];
 
+var allNavItems = [];
+for (var i = 0; i < (document.getElementsByClassName("navitem").length); i++) {
+  allNavItems.push(document.getElementsByClassName("navlist")[0].children[i]);
+}
+
+// for (var i = 0; i < (document.getElementsByClassName("navitem").length); i++) {
+//   console.log(allNavItems[i]);
+// }
+// console.log(document.getElementsByClassName("navlist")[0].children[0]);
+
 /*
  * This function checks whether all of the required inputs were supplied by
  * the user and, if so, inserts a new twit into the page using these inputs.
@@ -238,6 +248,29 @@ function parseTwitElem(twitElem) {
 
 }
 
+function dashboard(index) {
+  console.log("hey " + index);
+  window.location = '/twit/' + index;
+}
+
+function removeClassByID(idNameRemove, className) {
+  document.getElementById(idNameRemove).classList.remove(className);
+}
+
+function addClassByID(idNameADD, className) {
+  document.getElementById(idNameADD).classList.add(className);
+}
+
+function updateSideBar(className, targetID) {
+  for (var i = 0; i < allNavItems.length; i++) {
+    for (var j = 0; j < (allNavItems[i].classList.length); j++) {
+      if (allNavItems[i].classList[j] === "active") {
+        removeClassByID(allNavItems[i].id, "active");
+      }
+    }
+    addClassByID(targetID, "active");
+  }
+}
 
 /*
  * Wait until the DOM content is loaded, and then hook up UI interactions, etc.
@@ -280,4 +313,36 @@ window.addEventListener('DOMContentLoaded', function () {
     searchInput.addEventListener('input', doSearchUpdate);
   }
 
+  // var dashboardTwit = document.getElementsByClassName('dashboard-twit-button');
+  // if (dashboardTwit) {
+  //   for (var i = 0; i < dashboardTwit.length; i++) {
+  //     dashboardTwit[i].addEventListener('click', dashboard);
+  //   }
+  // }
+
 });
+
+var navItem = document.getElementsByClassName('navitem');
+if (navItem) {
+  for (var i = 0; i < navItem.length; i++) {
+    navItem[i].addEventListener('click',
+    function(event) {
+      updateSideBar("active", event.target.parentNode.id);
+    });
+  }
+}
+
+
+var dashboardTwit = document.getElementsByClassName('dashboard-twit-button');
+if (dashboardTwit) {
+  for (var i = 0; i < dashboardTwit.length; i++) {
+    (function(index) {
+      dashboardTwit[i].addEventListener('click',
+      function(event) {
+        console.log(index);
+        dashboard(index);
+      });
+
+  })(i);
+  }
+}

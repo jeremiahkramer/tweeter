@@ -1,11 +1,3 @@
-/*
- * Write your routing code in this file.  Make sure to add your name and
- * @oregonstate.edu email address below.
- *
- * Name: Jeremiah Kramer
- * Email: kramerje@oregonstate.edu
- */
-
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
@@ -28,6 +20,8 @@ app.get('/', function (req, res, next) {
 });
 
 app.use(express.static('public'));
+
+app.use(express.static('public/images'));
 
 app.get('/twit/:n', function (req, res, next) {
    var n = req.params.n;
